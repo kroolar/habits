@@ -2,6 +2,9 @@
 // views/layouts/application.html.erb
 //
 //    <%= vite_client_tag %>
+
+import renderComponents from "../initializers/renderComponents"
+
 //    <%= vite_javascript_tag 'application' %>
 console.log('Vite ⚡️ Rails')
 
@@ -26,3 +29,4 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
+renderComponents()
