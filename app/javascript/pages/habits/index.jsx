@@ -90,6 +90,7 @@ const Habits = () => {
         columns={COLUMNS}
         data={habits}
         defaultPageSize={10}
+        minRows={1}
       />
     </div>
   )
