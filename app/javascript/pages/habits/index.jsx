@@ -8,6 +8,7 @@ import Dialog from '../../components/dialog';
 import { IconButton, TextField, Tooltip } from '@mui/material';
 import IconPicker from '../../components/iconPicker.jsx';
 import ColorPicker from '../../components/colorPicker/index.jsx';
+import Table from '../../components/table/index.jsx';
 
 const COLUMNS = [
   { Header: 'Icon', width: 100, accessor: 'icon', Cell: (row) => (
@@ -38,8 +39,11 @@ const Habits = () => {
   const [description, setDescription] = useState('')
   const [icon, setIcon] = useState('dashboard')
   const [isFormOpen, setisFormOpen] = useState(false)
+  const [tableLoading, setTableLoading] = useState(true)
 
-  const getHabits = () => apiGet('habits').then(setHabits)
+  const getHabits = () => apiGet('habits')
+    .then(setHabits)
+    .finally(() => setTableLoading(false))
 
   useEffect(getHabits, [])
 
@@ -94,12 +98,11 @@ const Habits = () => {
         />
       </Dialog>
 
-      <ReactTable
+      <Table
         className="w-2/3"
         columns={COLUMNS}
         data={habits}
-        defaultPageSize={10}
-        minRows={1}
+        loading={tableLoading}
       />
     </div>
   )
