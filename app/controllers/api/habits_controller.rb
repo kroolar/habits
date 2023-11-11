@@ -30,7 +30,8 @@ module Api
         :name,
         :icon,
         :description,
-        :color
+        :color,
+        :kind
       )
     end
   end

@@ -9,6 +9,7 @@ import { IconButton, TextField, Tooltip } from '@mui/material';
 import IconPicker from '../../components/iconPicker.jsx';
 import ColorPicker from '../../components/colorPicker/index.jsx';
 import Table from '../../components/table/index.jsx';
+import ToggleButton from '../../components/toggleButton/index.jsx';
 
 const COLUMNS = [
   { Header: 'Icon', width: 100, accessor: 'icon', Cell: (row) => (
@@ -20,6 +21,16 @@ const COLUMNS = [
     </div>
   )},
   { Header: 'Name', width: 300, accessor: 'name', Cell: (row) => <span style={{color: row.original.color}}>{row.original.name}</span> },
+  { Header: 'Type', width: 100, accessor: 'icon', Cell: (row) => (
+    <Tooltip className="ml-3" arrow placement="top" title={row.original.kind}>
+      <span>
+        <Icon
+          className={`${row.original.kind === 'good' ? 'text-green-700' : 'text-red-700'} cursor-default`}
+          icon={`${row.original.kind === 'good' ? 'mood' : 'mood_bad'}`}
+        />
+      </span>
+    </Tooltip>
+  )},
   { Header: 'Description', accessor: 'description', Cell: row => <div className="flex flex-1">{row.original.description}</div> },
   { Header: '', width: 100, Cell: row => (
     <div className="flex justify-end">
@@ -40,6 +51,7 @@ const Habits = () => {
   const [icon, setIcon] = useState('dashboard')
   const [isFormOpen, setisFormOpen] = useState(false)
   const [tableLoading, setTableLoading] = useState(true)
+  const [type, setType] = useState('good')
 
   const getHabits = () => apiGet('habits')
     .then(setHabits)
@@ -48,7 +60,7 @@ const Habits = () => {
   useEffect(getHabits, [])
 
   const createHabit = () => {
-    apiPost('habits', { habit: { name, icon, description, color }})
+    apiPost('habits', { habit: { name, icon, description, color, kind: type }})
       .then(e => {
         if (e.errors) setErrors(e.errors)
         else { getHabits(); setisFormOpen(false) }
@@ -86,6 +98,12 @@ const Habits = () => {
           <IconPicker value={icon} onChange={setIcon} />
           <ColorPicker value={color} onChange={setColor} />
         </div>
+
+        <ToggleButton
+          className="mb-4"
+          value={type}
+          onChange={setType}
+        />
 
         <TextField
           className="w-full"
