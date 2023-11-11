@@ -5,20 +5,29 @@ import Icon from '../../components/icon';
 import { apiGet, apiPost } from '../../utilities/apiClient'
 import Button from '../../components/button'
 import Dialog from '../../components/dialog';
-import { IconButton, TextField, TextareaAutosize, Tooltip } from '@mui/material';
+import { IconButton, TextField, Tooltip } from '@mui/material';
 import IconPicker from '../../components/iconPicker.jsx';
 import ColorPicker from '../../components/colorPicker/index.jsx';
 
 const COLUMNS = [
-  { Header: 'Icon', width: 60, accessor: 'icon', Cell: (row) => <Icon style={{color: row.original.color}} icon={row.original.icon} /> },
-  { Header: 'Name', accessor: 'name', Cell: (row) => <span style={{color: row.original.color}}>{row.original.name}</span> },
-  { Header: 'Description', accessor: 'description' },
-  { Header: '', Cell: row => (
-    <Tooltip arrow title="Open" placement="top">
-      <IconButton href={`/habits/${row.original.id}`}>
-        <Icon icon="open_in_new" />
-      </IconButton>
-    </Tooltip>
+  { Header: 'Icon', width: 100, accessor: 'icon', Cell: (row) => (
+    <div className="ml-3">
+      <Icon
+        style={{color: row.original.color}}
+        icon={row.original.icon}
+      />
+    </div>
+  )},
+  { Header: 'Name', width: 300, accessor: 'name', Cell: (row) => <span style={{color: row.original.color}}>{row.original.name}</span> },
+  { Header: 'Description', accessor: 'description', Cell: row => <div className="flex flex-1">{row.original.description}</div> },
+  { Header: '', width: 100, Cell: row => (
+    <div className="flex justify-end">
+      <Tooltip arrow title="Open" placement="top">
+        <IconButton href={`/habits/${row.original.id}`}>
+          <Icon icon="open_in_new" />
+        </IconButton>
+      </Tooltip>
+    </div>
   )}
 ]
 
@@ -86,7 +95,7 @@ const Habits = () => {
       </Dialog>
 
       <ReactTable
-        className="w-full"
+        className="w-2/3"
         columns={COLUMNS}
         data={habits}
         defaultPageSize={10}
