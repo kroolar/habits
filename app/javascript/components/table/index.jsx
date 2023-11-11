@@ -18,6 +18,10 @@ const Table = ({
     minRows={minRows}
     loading={loading}
     loadingText={<Icon className="animate-spin text-6xl -mt-32 text-sky-700" icon="sync" />}
+    noDataText={<div className="flex items-center justify-center text-gray-700 text-lg font-semibold">
+      <Icon className="w-20" icon="database" />
+      <span>There is no data here</span>
+    </div>}
   />
 )
 export default Table
