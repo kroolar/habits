@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_07_153856) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_11_123349) do
   create_table "habits", force: :cascade do |t|
     t.string "name"
     t.string "icon"
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_153856) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "kind"
   end
 
 end
