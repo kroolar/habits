@@ -105,9 +105,11 @@ const IconPicker = ({
   }
 
   return (
-    <>
+    <div className={className}>
+      <label className="flex text-xs -pb-1 text-gray-700 leading-none">Icon</label>
+
       <Icon
-        className={`flex items-center justify-center p-2 border rounded h-10 w-10 cursor-pointer duration-300 hover:bg-gray-100 ${className}`}
+        className={`flex items-center justify-center bg-gray-50 text-gray-700 p-2 border border-gray-300 rounded h-10 w-10 cursor-pointer duration-300 hover:brightness-90`}
         icon={value}
         onClick={() => setIsOpen(true)}
       />
@@ -121,7 +123,7 @@ const IconPicker = ({
           ))}
         </div>
       </Dialog>
-    </>
+    </div>
   )
 }
 export default IconPicker

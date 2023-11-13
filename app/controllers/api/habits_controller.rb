@@ -7,7 +7,11 @@ module Api
     def create
       habit = Habit.new(permitted_params)
 
-      habit.save ? render(json: :ok) : render(json: { errors: ''})
+      if habit.save
+        render(json: :ok)
+      else
+        render json: { errors: habit.json_errors }
+      end
     end
 
     def show

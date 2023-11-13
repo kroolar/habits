@@ -10,6 +10,9 @@ import IconPicker from '../../components/iconPicker.jsx';
 import ColorPicker from '../../components/colorPicker/index.jsx';
 import Table from '../../components/table/index.jsx';
 import ToggleButton from '../../components/toggleButton/index.jsx';
+import Input from '../../components/input'
+import Textarea from '../../components/textarea'
+import Toast from '../../components/toast'
 
 const COLUMNS = [
   { Header: 'Icon', width: 100, accessor: 'icon', Cell: (row) => (
@@ -52,23 +55,45 @@ const Habits = () => {
   const [isFormOpen, setisFormOpen] = useState(false)
   const [tableLoading, setTableLoading] = useState(true)
   const [type, setType] = useState('good')
+  const [errors, setErrors] = useState({})
+  const [toastMessage, setToastMessage] = useState('')
+
 
   const getHabits = () => apiGet('habits')
     .then(setHabits)
     .finally(() => setTableLoading(false))
 
-  useEffect(getHabits, [])
+  const getParams = () => {
+    const message = window.location.search.replace('?message=', '').replaceAll('%20', ' ')
+
+    setToastMessage(message)
+  }
+
+  useEffect(() => {
+    getHabits()
+    getParams()
+  }, [])
 
   const createHabit = () => {
     apiPost('habits', { habit: { name, icon, description, color, kind: type }})
       .then(e => {
         if (e.errors) setErrors(e.errors)
-        else { getHabits(); setisFormOpen(false) }
+        else {
+          getHabits();
+          setisFormOpen(false)
+          setToastMessage('Habit has been created successfully')
+        }
       })
   } 
 
   return (
     <div>
+      <Toast
+        type="success"
+        text={toastMessage}
+        onClose={() => setToastMessage('')}
+      />
+
       <div className="flex justify-between mb-10">
         <Breadcrumbs
           data={[
@@ -86,33 +111,41 @@ const Habits = () => {
         successText="Create"
         title = "Create Habit"
       >
-        <TextField
+        
+        <Input
           className="w-full"
           onChange={e => setName(e.target.value)}
           value={name}
           label="Name"
-          size="small"
+          error={errors?.name}
         />
 
-        <div className="flex mb-4">
-          <IconPicker value={icon} onChange={setIcon} />
-          <ColorPicker value={color} onChange={setColor} />
+        <div className="flex mb-4 items-start">
+          <ColorPicker
+            className="mt-4 mr-4"
+            value={color}
+            onChange={setColor}
+          />
+
+          <IconPicker
+            className="mt-4"
+            value={icon}
+            onChange={setIcon}
+          />
         </div>
 
         <ToggleButton
-          className="mb-4"
+          className="mb-6"
           value={type}
           onChange={setType}
         />
 
-        <TextField
+        <Textarea
           className="w-full"
           onChange={e => setDescription(e.target.value)}
           value={description}
           label="Description"
-          size="small"
           rows={4}
-          multiline
         />
       </Dialog>
 
