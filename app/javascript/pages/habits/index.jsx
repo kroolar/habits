@@ -11,6 +11,8 @@ import ColorPicker from '../../components/colorPicker/index.jsx';
 import Table from '../../components/table/index.jsx';
 import ToggleButton from '../../components/toggleButton/index.jsx';
 import Input from '../../components/input'
+import Textarea from '../../components/textarea'
+import Toast from '../../components/toast'
 
 const COLUMNS = [
   { Header: 'Icon', width: 100, accessor: 'icon', Cell: (row) => (
@@ -54,6 +56,8 @@ const Habits = () => {
   const [tableLoading, setTableLoading] = useState(true)
   const [type, setType] = useState('good')
   const [errors, setErrors] = useState({})
+  const [toastMessage, setToastMessage] = useState('')
+
 
   const getHabits = () => apiGet('habits')
     .then(setHabits)
@@ -65,12 +69,22 @@ const Habits = () => {
     apiPost('habits', { habit: { name, icon, description, color, kind: type }})
       .then(e => {
         if (e.errors) setErrors(e.errors)
-        else { getHabits(); setisFormOpen(false) }
+        else {
+          getHabits();
+          setisFormOpen(false)
+          setToastMessage('Habit has been created successfully')
+        }
       })
   } 
 
   return (
     <div>
+      <Toast
+        type="success"
+        text={toastMessage}
+        onClose={() => setToastMessage('')}
+      />
+
       <div className="flex justify-between mb-10">
         <Breadcrumbs
           data={[
@@ -117,14 +131,12 @@ const Habits = () => {
           onChange={setType}
         />
 
-        <TextField
+        <Textarea
           className="w-full"
           onChange={e => setDescription(e.target.value)}
           value={description}
           label="Description"
-          size="small"
           rows={4}
-          multiline
         />
       </Dialog>
 
