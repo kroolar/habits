@@ -50,12 +50,14 @@ const ColorPicker = ({
         </div>
 
       <Dialog open={isOpen}>
-        <div className="p-4" style={{ width: '368px', height: '368px' }}>
+        <div className="p-4 flex flex-wrap" style={{ width: '312px', height: '312px' }}>
           {getColorPallete().map(({ color, title }) => (
             <Tooltip arrow title={title} placement="top">
-              <IconButton onClick={() => handleChange(color)}>
-                <div className="w-8 h-8 rounded border" style={{ backgroundColor: color}} />
-              </IconButton>
+              <div className="w-10 h-10">
+                <IconButton onClick={() => handleChange(color)}>
+                  <div className="w-6 h-6 rounded" style={{ backgroundColor: color}} />
+                </IconButton>
+              </div>
             </Tooltip>
           ))}
         </div>
