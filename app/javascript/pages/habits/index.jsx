@@ -63,7 +63,16 @@ const Habits = () => {
     .then(setHabits)
     .finally(() => setTableLoading(false))
 
-  useEffect(getHabits, [])
+  const getParams = () => {
+    const message = window.location.search.replace('?message=', '').replaceAll('%20', ' ')
+
+    setToastMessage(message)
+  }
+
+  useEffect(() => {
+    getHabits()
+    getParams()
+  }, [])
 
   const createHabit = () => {
     apiPost('habits', { habit: { name, icon, description, color, kind: type }})
