@@ -1,7 +1,7 @@
 module Api
   class HabitsController < ApplicationController
     def index
-      render json: Habit.all
+      render json: Habit.all.as_json(methods: :stats_json)
     end
 
     def create

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_11_123349) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_14_090907) do
   create_table "habits", force: :cascade do |t|
     t.string "name"
     t.string "icon"
@@ -21,6 +21,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_11_123349) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "kind"
+  end
+
+  create_table "stats", force: :cascade do |t|
+    t.integer "habit_id"
+    t.boolean "completed", default: false
+    t.boolean "skipped", default: false
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
