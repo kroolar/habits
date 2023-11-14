@@ -24,6 +24,17 @@ const COLUMNS = [
     </div>
   )},
   { Header: 'Name', width: 300, accessor: 'name', Cell: (row) => <span style={{color: row.original.color}}>{row.original.name}</span> },
+  { Header: 'History', accessor: 'stats_json', Cell: (row) => (
+    <div className="flex items-center justify-center">
+      {row.original.stats_json.map(stat => (
+        <Tooltip className="mr-4" arrow placement="top" title={stat.title}>
+          <div className={`flex items-center justify-center duration-300 h-6 w-6 border-2 border-${stat.color} rounded cursor-pointer`}>
+            <Icon className={`text-xl text-${stat.color}`} icon={stat.icon} />
+          </div>
+        </Tooltip>
+      ))}
+    </div>
+  )},
   { Header: 'Type', width: 100, accessor: 'icon', Cell: (row) => (
     <Tooltip className="ml-3" arrow placement="top" title={row.original.kind}>
       <span>
@@ -36,7 +47,7 @@ const COLUMNS = [
   )},
   { Header: 'Description', accessor: 'description', Cell: row => <div className="flex flex-1">{row.original.description}</div> },
   { Header: '', width: 100, Cell: row => (
-    <div className="flex justify-end">
+    <div className="flex justify-end items-center">
       <Tooltip arrow title="Open" placement="top">
         <IconButton href={`/habits/${row.original.id}`}>
           <Icon icon="open_in_new" />
