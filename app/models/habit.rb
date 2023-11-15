@@ -10,4 +10,8 @@ class Habit < ApplicationRecord
   def stats_json
     stats.map(&:react_json)
   end
+
+  def today_stat
+    stats_json.last
+  end
 end

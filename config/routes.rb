@@ -5,5 +5,6 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :habits, only: %i[index create show destroy]
+    resources :stats, only: :create
   end
 end
