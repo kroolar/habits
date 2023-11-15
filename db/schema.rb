@@ -25,9 +25,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_090907) do
 
   create_table "stats", force: :cascade do |t|
     t.integer "habit_id"
-    t.boolean "completed", default: false
-    t.boolean "skipped", default: false
-    t.datetime "date"
+    t.string "status"
+    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

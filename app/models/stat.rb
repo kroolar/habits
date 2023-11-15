@@ -1,8 +1,16 @@
 class Stat < ApplicationRecord
   belongs_to :habit
 
+  def completed?
+    status == 'completed'
+  end
+
+  def skipped?
+    status == 'skipped'
+  end
+
   def react_json
-    { icon:, color:, title: }
+    { icon:, color:, title:, status: }
   end
 
   def icon
