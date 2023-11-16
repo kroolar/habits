@@ -14,4 +14,20 @@ class Habit < ApplicationRecord
   def today_stat
     stats.find_by(date: Date.today)&.react_json
   end
+
+  def streak
+    number = 0
+
+    stats.reverse.each do |stat|
+      if stat.status == 'completed'
+        number += 1
+      elsif stat.status == 'skipped'
+        next
+      else
+        return number
+      end
+    end
+
+    number
+  end
 end
