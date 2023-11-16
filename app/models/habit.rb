@@ -12,6 +12,6 @@ class Habit < ApplicationRecord
   end
 
   def today_stat
-    stats_json.last
+    stats.find_by(date: Date.today)&.react_json
   end
 end
