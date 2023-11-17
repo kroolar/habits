@@ -69,6 +69,46 @@ const Habit = ({ id }) => {
           <span>Destroy</span>
         </button>
       </div>
+
+
+      <div className="bg-white rounded shadow p-10 w-1/2">
+        <div className="flex items-center">
+          <Icon className="mr-2 text-3xl text-gray-600" icon={habit.icon} />
+          <span className="font-medium text-xl text-gray-600" >{habit.name}</span>
+        </div>
+
+        <div className="mt-10">
+          <span className="text-gray-700 font-medium">Description</span>
+          <div className="text-gray-700 font-light text-justify">{habit.description}</div>
+        </div>
+
+        <div className="flex">
+          <div className="mt-10 w-1/3">
+            <span className="text-gray-700 font-medium">Type</span>
+            <div className={`${habit.kind === 'good' ? 'text-green-700' : 'text-red-700'} font-medium flex items-center mt-1`}>
+              <Icon className="mr-2" icon={habit.kind === 'good' ? 'mood' : 'mood_bad'} />
+              {habit.kind === 'good' ? 'Good Habit' : 'Bad Habit'}
+            </div>
+          </div>
+
+          <div className="mt-10 w-1/3">
+            <span className="text-gray-700 font-medium">Icon</span>
+            <div className={`font-medium text-gray-700 flex items-center mt-1`}>
+              <Icon className="mr-2" icon={habit.icon} />
+              {habit.icon}
+            </div>
+          </div>
+
+          <div className="mt-10 w-1/3">
+            <span className="text-gray-700 font-medium">Color</span>
+            <div className="flex items-center mt-1">
+              <div style={{ backgroundColor: habit.color}} className={`font-medium h-6 w-6 rounded mr-2`}>
+              </div>
+              {habit.color}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

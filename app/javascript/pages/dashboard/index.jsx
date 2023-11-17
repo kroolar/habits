@@ -43,13 +43,13 @@ const Dashboard = () => {
   return (
     <div>
       <Breadcrumbs
-        className="flex-1"
+        className="flex-1 mb-10"
         data={[
           { isActive: false, href: '/', text: 'Dashboard' },
         ]}
       />
       <div className="flex items-start">
-        <div className="w-1/2">
+        <div className="w-2/3 shadow rounded">
           <div className="bg-white py-2">
             <h2 className="text-gray-700 text-xl font-medium p-4">
               Today's Habits
@@ -86,58 +86,63 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="flex flex-col px-3 bg-white ml-10 w-1/4">
-          <h2 className="text-gray-700 text-xl font-medium my-4">
-            Habits Stats
-          </h2>
+        <div className="w-1/3 ml-10">
+          <div className="flex flex-col px-3 bg-white mb-10 shadow rounded">
+            <h2 className="text-gray-700 text-xl font-medium my-4">
+              Habits Stats
+            </h2>
 
-          <div className="flex items-center px-2 py-3">
-            <Icon className="text-sky-700 w-8" icon="all_inclusive" />
-            <div className="font-medium text-sky-700 flex-1">All Habits</div>
-            <div className="text-gray-700 font-semibold text-sky-700">
-              {habits.length}
+            <div className="flex items-center px-2 py-3">
+              <Icon className="text-sky-700 w-8" icon="all_inclusive" />
+              <div className="font-medium text-sky-700 flex-1">All Habits</div>
+              <div className="text-gray-700 font-semibold text-sky-700">
+                {habits.length}
+              </div>
+            </div>
+
+            <div className="flex items-center py-3 px-2 border-t-2 border-gray-300">
+              <Icon className="text-green-700 w-8" icon="mood" />
+              <div className="font-medium text-green-700 flex-1">Good Habits</div>
+              <div className="text-gray-700 font-semibold text-green-700">
+                {habits.filter(h => h.kind == 'good').length}
+              </div>
+            </div>
+
+            <div className="flex items-center py-3 px-2 border-t-2 border-gray-300">
+              <Icon className="text-red-700 w-8" icon="mood_bad" />
+              <div className="font-medium text-red-700 flex-1">Bad Habits</div>
+              <div className="text-gray-700 font-semibold text-red-700">
+                {habits.filter(h => h.kind == 'bad').length}
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center py-3 px-2 border-t-2 border-gray-300">
-            <Icon className="text-green-700 w-8" icon="mood" />
-            <div className="font-medium text-green-700 flex-1">Good Habits</div>
-            <div className="text-gray-700 font-semibold text-green-700">
-              {habits.filter(h => h.kind == 'good').length}
-            </div>
-          </div>
+          <div className="">
+            <div className="bg-white p-4 shadow rounded">
+              <h2 className="text-gray-700 text-xl mb-10 font-medium">
+                Best Streaks
+              </h2>
 
-          <div className="flex items-center py-3 px-2 border-t-2 border-gray-300">
-            <Icon className="text-red-700 w-8" icon="mood_bad" />
-            <div className="font-medium text-red-700 flex-1">Bad Habits</div>
-            <div className="text-gray-700 font-semibold text-red-700">
-              {habits.filter(h => h.kind == 'bad').length}
+              {top_5.map(habit => (
+                <div class="flex items-center mb-6">
+                  <Tooltip title="Home" placement="top" arrow>
+                    <div className="mr-2 h-6">
+                      <Icon style={{ color: habit.color }} icon={habit.icon} />
+                    </div>
+                  </Tooltip>
+
+                  <div style={{ borderColor: habit.color }} className="w-full border-2 h-5 rounded">
+                    <div style={{ width: `${habit.width}%`, backgroundColor: habit.color }} className="h-full" />
+                  </div>
+                  <div className="ml-2 font-medium" style={{ color: habit.color }}>{habit.streak}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* <div className="ml-10 w-1/4">
-          <div className="bg-white p-4">
-            <h2 className="text-gray-700 text-xl mb-10 font-medium">
-              Best Streaks
-            </h2>
 
-            {top_5.map(habit => (
-              <div class="flex items-center mb-6">
-                <Tooltip title="Home" placement="top" arrow>
-                  <div className="mr-2 h-6">
-                    <Icon style={{ color: habit.color }} icon={habit.icon} />
-                  </div>
-                </Tooltip>
-
-                <div style={{ borderColor: habit.color }} className="w-full border-2 h-5 rounded">
-                  <div style={{ width: `${habit.width}%`, backgroundColor: habit.color }} className="h-full" />
-                </div>
-                <div className="ml-2 font-medium" style={{ color: habit.color }}>{habit.streak}</div>
-              </div>
-            ))}
-          </div>
-        </div> */}
+        
 
         {/* <div class="p-10 bg-white ml-10 mt-10">
           <div class="text-gray-700 text-2xl font-medium">
