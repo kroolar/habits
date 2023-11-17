@@ -2,54 +2,37 @@ import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '../../../components/breadcrumbs'
 import Button from '../../../components/button'
 import { apiDelete, apiGet } from '../../../utilities/apiClient'
-import { Dialog, IconButton } from '@mui/material'
 import Icon from '../../../components/icon'
+import { DeleteDialog } from '../../../components/index.js'
+import Form from '../form/index.jsx'
 
 const Habit = ({ id }) => {
   const [habit, setHabit] = useState({})
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+  const [isEditOpen, setIsEditOpen] = useState(false)
 
   const getHabit = () => apiGet(`habits/${id}`).then(setHabit)
+  
+  const destroy = () => apiDelete(`habits/${id}`)
+    .then(() => window.location.replace('/habits?message=Habit has been deleted!') )
 
   useEffect(getHabit, [])
 
-  const destroy = () => {
-    apiDelete(`habits/${id}`).then(() => window.location.replace('/habits?message=Habit has been deleted!') )
-  }
-
   return (
     <div>
-      <Dialog open={isDeleteOpen} onClose={() => setIsDeleteOpen(false)}>
-        <div style={{ width: '400px' }} className="p-10">
-          <div className="flex items-center justify-between mb-6">
-            <div className="text-xl text-gray-700">
-              Delete Habit
-            </div>
+      <Form
+        isOpen={isEditOpen}
+        habit={habit}
+        onClose={setIsEditOpen}
+        onSuccess={getHabit}
+      />
 
-            <IconButton>
-              <Icon onClick={() => setIsDeleteOpen(false)} icon="close" />
-            </IconButton>
-          </div>
-
-          Are you sure you want to deleted this habit?
-
-          <div className="flex justify-end mt-6">        
-            <Button
-              className="mr-4 w-24"
-              variant="outlined"
-              onClick={() => setIsDeleteOpen(false)}
-              text="Discard"
-            />
-
-          <button
-            className={`w-24 mr-4 h-10 flex items-center justify-center px-3 text-white bg-red-700 font-medium cursor-pointer duration-300 rounded hover:bg-red-900`}
-            onClick={destroy}
-          >
-            Destroy
-          </button>
-          </div>
-        </div>
-      </Dialog>
+      <DeleteDialog
+        isOpen={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+        onDestroy={destroy}
+        description="Are you sure you want to delete this habit?"
+      />
 
       <div className="flex mb-10">
         <Breadcrumbs
@@ -60,7 +43,7 @@ const Habit = ({ id }) => {
           ]}
         />
 
-        <Button className="w-20" text="Edit" />
+        <Button className="w-20" text="Edit" onClick={() => setIsEditOpen(true)} />
 
         <button
           className={`ml-4 h-10 flex items-center justify-center w-20 text-red-700 border-2 border-red-700 font-medium cursor-pointer duration-300 rounded hover:bg-red-700 hover:text-white`}
@@ -69,7 +52,6 @@ const Habit = ({ id }) => {
           <span>Destroy</span>
         </button>
       </div>
-
 
       <div className="bg-white rounded shadow p-10 w-1/2">
         <div className="flex items-center">

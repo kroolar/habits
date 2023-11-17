@@ -14,6 +14,17 @@ module Api
       end
     end
 
+    def update
+      habit = Habit.find(params[:id])
+      habit.assign_attributes(permitted_params)
+
+      if habit.save
+        render(json: :ok)
+      else
+        render json: { errors: habit.json_errors }
+      end
+    end
+
     def show
       habit = Habit.find(params[:id])
 

@@ -54,6 +54,7 @@ const Dashboard = () => {
             <h2 className="text-gray-700 text-xl font-medium p-4">
               Today's Habits
             </h2>
+
             {habits.map(habit => (
               <div className="flex border-gray-200 border-b-2 p-2 mx-4">
                 <Icon style={{ color: habit.color }} icon={habit.icon} />
